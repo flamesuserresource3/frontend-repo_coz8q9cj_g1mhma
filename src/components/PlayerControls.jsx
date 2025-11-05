@@ -29,7 +29,7 @@ const PlayerControls = ({
     <div className="w-full space-y-3">
       {/* Seek Bar */}
       <div className="flex items-center gap-3">
-        <span className="text-xs tabular-nums text-slate-600 w-10 text-right">{formatTime(currentTime)}</span>
+        <span className="text-xs tabular-nums text-slate-300 w-10 text-right">{formatTime(currentTime)}</span>
         <input
           type="range"
           min={0}
@@ -37,23 +37,23 @@ const PlayerControls = ({
           step={0.1}
           value={Math.min(currentTime, duration || 0)}
           onChange={(e) => onSeek(parseFloat(e.target.value))}
-          className="w-full accent-blue-600"
+          className="w-full accent-indigo-500"
         />
-        <span className="text-xs tabular-nums text-slate-600 w-10">{formatTime(duration)}</span>
+        <span className="text-xs tabular-nums text-slate-300 w-10">{formatTime(duration)}</span>
       </div>
 
       {/* Transport Controls */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <button
-            className={`p-2 rounded-md hover:bg-slate-100 ${shuffle ? 'text-blue-600' : 'text-slate-600'}`}
+            className={`p-2 rounded-md hover:bg-white/10 ${shuffle ? 'text-indigo-400' : 'text-slate-300'}`}
             onClick={onToggleShuffle}
             title="Shuffle"
           >
             <Shuffle className="h-5 w-5" />
           </button>
           <button
-            className={`p-2 rounded-md hover:bg-slate-100 ${repeat ? 'text-blue-600' : 'text-slate-600'}`}
+            className={`p-2 rounded-md hover:bg-white/10 ${repeat ? 'text-indigo-400' : 'text-slate-300'}`}
             onClick={onToggleRepeat}
             title="Repeat"
           >
@@ -63,21 +63,21 @@ const PlayerControls = ({
 
         <div className="flex items-center gap-2">
           <button
-            className="p-2 rounded-full bg-white shadow hover:shadow-md text-slate-700"
+            className="p-2 rounded-full bg-white/5 ring-1 ring-white/10 hover:bg-white/10 text-white"
             onClick={onPrev}
             title="Previous"
           >
             <SkipBack className="h-6 w-6" />
           </button>
           <button
-            className="p-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl"
+            className="p-3 rounded-full bg-white text-slate-900 shadow-lg hover:shadow-xl"
             onClick={onPlayPause}
             title={isPlaying ? 'Pause' : 'Play'}
           >
             {isPlaying ? <Pause className="h-7 w-7" /> : <Play className="h-7 w-7" />}
           </button>
           <button
-            className="p-2 rounded-full bg-white shadow hover:shadow-md text-slate-700"
+            className="p-2 rounded-full bg-white/5 ring-1 ring-white/10 hover:bg-white/10 text-white"
             onClick={onNext}
             title="Next"
           >
@@ -87,7 +87,7 @@ const PlayerControls = ({
 
         <div className="flex items-center gap-3">
           <button
-            className="p-2 rounded-md hover:bg-slate-100 text-slate-700"
+            className="p-2 rounded-md hover:bg-white/10 text-slate-200"
             onClick={onToggleMute}
             title={muted ? 'Unmute' : 'Mute'}
           >
@@ -104,7 +104,7 @@ const PlayerControls = ({
             step={0.01}
             value={muted ? 0 : volume}
             onChange={(e) => onVolumeChange(parseFloat(e.target.value))}
-            className="w-28 accent-blue-600"
+            className="w-28 accent-indigo-500"
           />
         </div>
       </div>

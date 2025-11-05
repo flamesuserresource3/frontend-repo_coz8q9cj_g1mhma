@@ -201,62 +201,86 @@ function App() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-sky-50 to-purple-50">
-      <div className="mx-auto max-w-5xl px-4 py-10">
-        <header className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight text-slate-800">Local Music Player</h1>
-          <p className="text-slate-600">A modern, private player that runs entirely in your browser.</p>
-        </header>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left: Playlist */}
-          <div className="lg:col-span-2 space-y-4">
+    <div className="min-h-screen bg-[rgb(10,10,12)] text-slate-100 selection:bg-indigo-600/30">
+      {/* Main layout */}
+      <div className="mx-auto max-w-[1200px] px-4 pb-28 pt-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[260px_1fr_360px]">
+          {/* Sidebar */}
+          <aside className="rounded-2xl bg-white/5 ring-1 ring-white/10 p-4 backdrop-blur">
+            <div className="mb-4">
+              <h2 className="text-sm uppercase tracking-wide text-slate-400">Library</h2>
+            </div>
             <FilePicker onFilesSelected={onFilesSelected} />
-            <Playlist
-              tracks={tracks}
-              currentIndex={currentIndex}
-              onSelect={setCurrentIndex}
-              onRemove={handleRemove}
-            />
-          </div>
+            <div className="mt-6 rounded-xl bg-gradient-to-br from-indigo-600/20 to-fuchsia-600/10 p-4">
+              <p className="text-xs text-slate-300">Shortcuts</p>
+              <ul className="mt-2 space-y-1 text-sm text-slate-300/90">
+                <li>Space — Play/Pause</li>
+                <li>←/→ — Seek ±5s</li>
+                <li>Files stay on your device</li>
+              </ul>
+            </div>
+          </aside>
 
-          {/* Right: Player */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-6 space-y-4">
-              <NowPlaying title={currentTrack?.name} isPlaying={isPlaying} />
+          {/* Now Playing panel */}
+          <main className="rounded-2xl bg-white/5 ring-1 ring-white/10 p-5 lg:p-6 backdrop-blur">
+            <NowPlaying title={currentTrack?.name} isPlaying={isPlaying} />
+          </main>
 
-              <div className="rounded-2xl border border-slate-200 bg-white/70 p-4 shadow-sm backdrop-blur">
-                <PlayerControls
-                  isPlaying={isPlaying}
-                  onPlayPause={handlePlayPause}
-                  onPrev={handlePrev}
-                  onNext={handleNext}
-                  currentTime={currentTime}
-                  duration={duration}
-                  onSeek={handleSeek}
-                  volume={volume}
-                  onVolumeChange={setVolume}
-                  muted={muted}
-                  onToggleMute={() => setMuted(m => !m)}
-                  shuffle={shuffle}
-                  onToggleShuffle={() => setShuffle(s => !s)}
-                  repeat={repeat}
-                  onToggleRepeat={() => setRepeat(r => !r)}
-                />
-                <audio ref={audioRef} hidden />
-              </div>
+          {/* Playlist */}
+          <section className="rounded-2xl bg-white/5 ring-1 ring-white/10 p-4 backdrop-blur min-h-[360px]">
+            <div className="mb-3 flex items-center justify-between">
+              <h2 className="text-sm uppercase tracking-wide text-slate-400">Playlist</h2>
+              <span className="text-xs text-slate-400">{tracks.length} {tracks.length === 1 ? 'track' : 'tracks'}</span>
+            </div>
+            <div className="max-h-[60vh] overflow-auto pr-1">
+              <Playlist
+                tracks={tracks}
+                currentIndex={currentIndex}
+                onSelect={setCurrentIndex}
+                onRemove={handleRemove}
+              />
+            </div>
+          </section>
+        </div>
+      </div>
 
-              <div className="rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white p-4">
-                <p className="text-sm opacity-90">Tips</p>
-                <ul className="mt-1 text-sm list-disc pl-5 space-y-1 opacity-95">
-                  <li>Press Space to play/pause.</li>
-                  <li>Use Left/Right arrows to seek 5s.</li>
-                  <li>Your files never leave your device.</li>
-                </ul>
+      {/* Bottom player bar */}
+      <div className="fixed inset-x-0 bottom-0 z-20 border-t border-white/10 bg-[rgb(17,17,20)]/95 backdrop-blur supports-[backdrop-filter]:bg-[rgb(17,17,20)]/80">
+        <div className="mx-auto max-w-[1200px] px-4 py-3">
+          <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-[1fr_minmax(480px,1fr)_1fr]">
+            {/* Left: track meta */}
+            <div className="min-w-0 hidden md:flex items-center gap-3">
+              <div className="h-12 w-12 overflow-hidden rounded-md bg-gradient-to-br from-indigo-500 to-fuchsia-600 ring-1 ring-white/10" />
+              <div className="min-w-0">
+                <p className="truncate text-sm font-medium text-white/90">{currentTrack?.name || 'Nothing playing'}</p>
+                <p className="truncate text-xs text-slate-400">Local file</p>
               </div>
             </div>
+
+            {/* Middle: controls */}
+            <PlayerControls
+              isPlaying={isPlaying}
+              onPlayPause={handlePlayPause}
+              onPrev={handlePrev}
+              onNext={handleNext}
+              currentTime={currentTime}
+              duration={duration}
+              onSeek={handleSeek}
+              volume={volume}
+              onVolumeChange={setVolume}
+              muted={muted}
+              onToggleMute={() => setMuted(m => !m)}
+              shuffle={shuffle}
+              onToggleShuffle={() => setShuffle(s => !s)}
+              repeat={repeat}
+              onToggleRepeat={() => setRepeat(r => !r)}
+            />
+
+            {/* Right: spacer */}
+            <div className="hidden md:block" />
           </div>
         </div>
+        <audio ref={audioRef} hidden />
       </div>
     </div>
   );
